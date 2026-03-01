@@ -26,9 +26,23 @@ body {
   width: 260px;
   background: var(--admin-sidebar);
   color: #e2e8f0;
-  flex-shrink: 0;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+
+  overflow-y: auto;
 }
 
+.admin-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+
+  margin-left: 260px; /* mesma largura do sidebar */
+}
 .admin-sidebar-header {
   padding: 1.25rem;
   border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -87,6 +101,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: sticky;
+  top: 0;
 }
 
 .admin-header h1 {
