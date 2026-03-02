@@ -1,4 +1,5 @@
 import { Address } from "./address";
+import { Provider } from "./provider";
 
 export type User = {
     id: string;
@@ -12,4 +13,9 @@ export type User = {
     created_at: string;
     updated_at: string;
     addresses: Address[];
+}
+
+
+export type AllUsers = User & {
+    provider_profile: Provider | null;
 }
