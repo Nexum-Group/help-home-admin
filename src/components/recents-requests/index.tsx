@@ -1,44 +1,49 @@
-export default function RecentRequests() {
+import { ServiceRequest } from "@/src/types/service"
+import { getStatusBadgeClass } from "@/src/utils/badge-class";
+import { formatStatus } from "@/src/utils/format-status";
+
+interface IRecentRequest {
+    data: ServiceRequest[];
+}
+
+export default function RecentRequests({ data }: IRecentRequest) {
+    console.log("Recent Requests:", data) // Log para verificar os dados recebidos
     return (
         <div className="admin-card">
             <h2 className="admin-card-title">Solicitações recentes</h2>
             <table className="admin-table">
-            <thead>
-                <tr>
-                <th>ID</th>
-                <th>Cliente</th>
-                <th>Prestador</th>
-                <th>Serviço</th>
-                <th>Status</th>
-                <th>Valor</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                <td>#12348</td>
-                <td>Maria Silva</td>
-                <td>Ana Souza</td>
-                <td>Faxina</td>
-                <td><span className="admin-badge admin-badge-success">Concluída</span></td>
-                <td>R$ 170</td>
-                </tr>
-                <tr>
-                <td>#12347</td>
-                <td>João Lima</td>
-                <td>Carlos Mendes</td>
-                <td>Eletricista</td>
-                <td><span className="admin-badge admin-badge-warning">Em andamento</span></td>
-                <td>R$ 120</td>
-                </tr>
-                <tr>
-                <td>#12346</td>
-                <td>Pedro Costa</td>
-                <td>Ana Souza</td>
-                <td>Faxina</td>
-                <td><span className="admin-badge admin-badge-info">Pendente</span></td>
-                <td>R$ 150</td>
-                </tr>
-            </tbody>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Prestador</th>
+                        <th>Serviço</th>
+                        <th>Status</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                {data.length === 0 ? (
+                    <tbody>
+                        <tr>
+                            <td colSpan={6} className="admin-table-empty">
+                                Nenhuma solicitação recente
+                            </td>
+                        </tr>
+                    </tbody>
+                ) : (
+                    <tbody>
+                        {data.map((request) => (
+                            <tr key={request.id}>
+                                <td>{request.id}</td>
+                                <td>{request.client.name}</td>
+                            <td>{request.provider.user?.name}</td>
+                            <td>{request.service_name}</td>
+                            <td><span className={`admin-badge ${getStatusBadgeClass(request.status)}`}>{formatStatus(request.status)}</span></td>
+                        <td>R$ {request.service_price}</td> 
+                            </tr>
+                        ))}
+                    </tbody>
+                )}
             </table>
         </div>  
     )

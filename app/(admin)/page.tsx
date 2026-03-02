@@ -14,7 +14,7 @@ export default function HomePage() {
   return (
     <div className="admin-content">
       <Stats data={data} />
-      <RecentRequests />
+      <RecentRequests data={data?.recent_requests || []} />
       <NewProviders newProviders={data?.new_providers || []} />
     </div>
   )

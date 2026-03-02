@@ -1,5 +1,7 @@
 import { Category } from "@/src/types/category"
 import { Provider } from "@/src/types/provider"
+import { getStatusBadgeClass } from "@/src/utils/badge-class"
+import { formatStatus } from "@/src/utils/format-status"
 
 interface INewProviders {
     newProviders: Provider[]
@@ -19,36 +21,6 @@ export default function NewProviders({ newProviders }: INewProviders) {
         return categories.map(cat => cat.name).join(', ')
     }
 
-    function formatStatus(status: string) {
-        switch (status) {
-            case "pending":
-                return "Pendente"
-            case "in_progress":
-                return "Em progresso"
-            case "approved":
-                return "Aprovado"
-            case "rejected":
-                return "Rejeitado"
-            default:
-                return status
-        }
-    }
-
-    function getStatusBadgeClass(status: string) {
-        switch (status) {
-            case "pending":
-                return "admin-badge-warning"
-            case "in_progress":
-                return "admin-badge-info"
-            case "approved":
-                return "admin-badge-success"
-            case "rejected":
-                return "admin-badge-danger"
-            default:
-                return ""
-        }
-    }
-
     return (
         <div className="admin-card">
             <h2 className="admin-card-title">Novos prestadores (últimos 7 dias)</h2>
@@ -65,7 +37,7 @@ export default function NewProviders({ newProviders }: INewProviders) {
                 {newProviders.map((provider) => (
                     <tr key={provider.id}>
                         <td>{provider.user.name}</td>
-                        <td>{formatCategories(provider.categories)}</td>
+                        <td>{provider.categories && provider.categories.length > 0 ? formatCategories(provider.categories) : "Nenhuma categoria"}</td>
                         <td>{formatDate(provider.user.created_at)}</td>
                         <td><span className={`admin-badge ${getStatusBadgeClass(provider.approval_status)}`}>{formatStatus(provider.approval_status)}</span></td>
                     </tr>

@@ -7,6 +7,7 @@ export type ServiceRequest = {
     client: User;
     provider: Provider;
     category: Category;
+    service_name: string;
     description: string;
     status: "pending" | "in_progress" | "completed" | "cancelled" | "rejected";
     service_price: number;
