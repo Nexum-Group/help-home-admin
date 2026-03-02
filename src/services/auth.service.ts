@@ -13,3 +13,9 @@ export function logout() {
     method: 'POST',
   })
 }
+
+export function getCurrentUser() {
+  return apiFetch('/user/whoami/', {
+    method: 'GET',
+  })
+}
