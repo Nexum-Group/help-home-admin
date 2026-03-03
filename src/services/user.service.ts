@@ -1,9 +1,15 @@
 import { apiFetch } from "../lib/api";
+import { ProviderStatus } from "../types/provider-status";
 
 
 interface GetUsersParams {
     search?:string;
     role?: 'client' | 'provider';
+}
+interface GetProvidersParams {
+    search?:string;
+    categoryId?: string;
+    status?: ProviderStatus;
 }
 
 export function getAllUsers(params?: GetUsersParams) {
@@ -11,6 +17,16 @@ export function getAllUsers(params?: GetUsersParams) {
     if (params?.search) query.append('search', params.search);
     if (params?.role) query.append('role', params.role);
     return apiFetch(`/user/all-users/?${query.toString()}`, {
+        method: 'GET',
+    })
+}
+
+export function getAllProviders(params?: GetProvidersParams) {
+    const query = new URLSearchParams()
+    if (params?.categoryId) query.append('category_id', params.categoryId);
+    if (params?.search) query.append('search', params.search);
+    if (params?.status) query.append('approval_status', params.status);
+    return apiFetch(`/user/all-providers/?${query.toString()}`, {
         method: 'GET',
     })
 }
