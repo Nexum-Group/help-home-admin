@@ -12,3 +12,7 @@ export type Provider = {
     created_at: string;
     updated_at: string;
 }
+
+export type ProviderWithServiceRequestsCount = Provider & {
+    service_requests_count: number;
+}
