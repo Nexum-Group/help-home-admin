@@ -1,6 +1,6 @@
-import { Category } from "@/src/types/category"
 import { Provider } from "@/src/types/provider"
 import { getStatusBadgeClass } from "@/src/utils/badge-class"
+import { formatCategories } from "@/src/utils/format-categories"
 import { formatDate } from "@/src/utils/format-date"
 import { formatStatus } from "@/src/utils/format-status"
 
@@ -8,11 +8,6 @@ interface INewProviders {
     newProviders: Provider[]
 }
 export default function NewProviders({ newProviders }: INewProviders) {
-
-    function formatCategories(categories: Category[]) {
-        return categories.map(cat => cat.name).join(', ')
-    }
-
     return (
         <div className="admin-card">
             <h2 className="admin-card-title">Novos prestadores (últimos 7 dias)</h2>
