@@ -6,8 +6,10 @@ export function formatStatus(status: string) {
             return "Em progresso"
         case "approved":
             return "Aprovado"
+        case "completed":
+            return "Concluída"
         case "rejected":
-            return "Rejeitado"
+            return "Recusada"
         default:
             return status
     }
