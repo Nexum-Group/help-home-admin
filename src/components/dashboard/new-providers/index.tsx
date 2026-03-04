@@ -1,5 +1,5 @@
 import { Provider } from "@/src/types/provider"
-import { getStatusBadgeClass } from "@/src/utils/badge-class"
+import { getStatusBadgeClass } from "@/src/utils/badge-status-class"
 import { formatCategories } from "@/src/utils/format-categories"
 import { formatDate } from "@/src/utils/format-date"
 import { formatStatus } from "@/src/utils/format-status"

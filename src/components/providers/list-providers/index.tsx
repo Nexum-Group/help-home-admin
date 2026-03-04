@@ -1,6 +1,7 @@
 'use client'
 
 import { ProviderWithServiceRequestsCount } from "@/src/types/provider"
+import { getStatusBadgeClass } from "@/src/utils/badge-status-class";
 import { formatProviderStatus } from "@/src/utils/formart-status-providers"
 import { formatCategories } from "@/src/utils/format-categories"
 
@@ -13,18 +14,6 @@ interface IListProviders {
 
 export default function ListProviders({ data, isLoading, error }: IListProviders) {
 
-    function getStatusBadgeClass(status: string) {
-        switch (status) {
-            case "pending":
-                return "admin-badge-warning"
-            case "approved":
-                return "admin-badge-success"
-            case "rejected":
-                return "admin-badge-danger"
-            default:
-                return ""
-        }
-    }
     if (isLoading) return <p>Carregando...</p>
     if (error) return <p>Erro ao carregar provedores</p>
     

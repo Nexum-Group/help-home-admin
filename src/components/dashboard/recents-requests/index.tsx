@@ -1,5 +1,5 @@
 import { ServiceRequest } from "@/src/types/service"
-import { getStatusBadgeClass } from "@/src/utils/badge-class";
+import { getStatusBadgeClass } from "@/src/utils/badge-status-class";
 import { formatStatus } from "@/src/utils/format-status";
 
 interface IRecentRequest {
@@ -7,7 +7,6 @@ interface IRecentRequest {
 }
 
 export default function RecentRequests({ data }: IRecentRequest) {
-    console.log("Recent Requests:", data) // Log para verificar os dados recebidos
     return (
         <div className="admin-card">
             <h2 className="admin-card-title">Solicitações recentes</h2>
