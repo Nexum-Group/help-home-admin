@@ -1,5 +1,6 @@
 import { Category } from "./category";
 import { Provider } from "./provider";
+import { ServiceStatus } from "./services-status";
 import { User } from "./user";
 
 export type ServiceRequest = {
@@ -9,7 +10,7 @@ export type ServiceRequest = {
     category: Category;
     service_name: string;
     description: string;
-    status: "pending" | "in_progress" | "completed" | "cancelled" | "rejected";
+    status:ServiceStatus;
     service_price: number;
     platform_fee: number;
     payment_status: "pending" | "paid" | "failed" | "refunded";
