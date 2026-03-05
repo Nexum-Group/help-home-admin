@@ -1,6 +1,6 @@
 'use client'
 
-import { useCategoriesOption } from "@/src/hooks/useCategory"
+import { useCategories } from "@/src/hooks/useCategory"
 
 interface ISelectCategory {
     categoryFilter: string;
@@ -8,7 +8,7 @@ interface ISelectCategory {
 }
 
 export default function SelectCategory({ categoryFilter, setCategoryFilter }: ISelectCategory) {
-    const { data, isLoading, error  } = useCategoriesOption();
+    const { data, isLoading, error  } = useCategories();
 
     if (isLoading) return <p>Carregando categorias...</p>
     if (error) return <p>Erro ao carregar categorias</p>

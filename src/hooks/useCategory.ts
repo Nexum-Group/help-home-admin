@@ -1,10 +1,10 @@
 // src/hooks/useDashboard.ts
 import { useQuery } from "@tanstack/react-query"
 import { getAllCategories } from "../services/category.service"
-import { CategoryOptions } from "../types/categories"
+import { CategoryItem, CategoryOptions } from "../types/categories"
 
-export function useCategoriesOption() {
-  return useQuery<CategoryOptions[]>({
+export function useCategories() {
+  return useQuery<CategoryOptions[] | CategoryItem[]>({
     queryKey: ["categories-options"],
     queryFn: getAllCategories,
   })
