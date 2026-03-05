@@ -8,6 +8,7 @@ const titles: Record<string, string> = {
     "/users": "Usuários",
     "/requests": "Solicitações",
     "/providers": "Prestadores",
+    "/categories": "Categorias"
     // Adicione mais rotas e títulos conforme necessário
 }
 
@@ -23,6 +24,9 @@ export default function Header() {
         <header className="admin-header">
             <h1>{title}</h1>
             <div className="admin-header-user">
+                {pathName === '/categories' && (
+                    <button className="admin-btn admin-btn-primary">Nova categoria</button>
+                )}
                 <span>{data?.name}</span>
                 <div style={{width: '36px', height: '36px', borderRadius: '50%', background: '#e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '600'}}>A</div>
             </div>
