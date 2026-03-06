@@ -257,6 +257,10 @@ body {
   font-size: 0.9rem;
 }
 
+.admin-form-group .admin-config {
+  width: auto;
+}
+
 .admin-form-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
