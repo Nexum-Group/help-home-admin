@@ -1,26 +1,41 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { jwtVerify } from "jose"
+import { NextResponse } from "next/server"
+import type { NextRequest } from "next/server"
 
-export function proxy(request: NextRequest) {
-  const accessToken = request.cookies.get('access_token')
-  const refreshToken = request.cookies.get('refresh_token')
+const secret = new TextEncoder().encode(process.env.JWT_SECRET)
 
-  const isAuthenticated = !!accessToken
-  const hasRefresh = !!refreshToken
+export async function proxy(request: NextRequest) {
+  const accessToken = request.cookies.get("access_token")?.value
+  const pathname = request.nextUrl.pathname
 
-  // Se não tem nenhum token
-  if (!isAuthenticated && !hasRefresh && request.nextUrl.pathname !== '/login') {
-    return NextResponse.redirect(new URL('/login', request.url))
+  // não logado tentando acessar admin
+  if (!accessToken && pathname.startsWith("/admin")) {
+    return NextResponse.redirect(new URL("/login", request.url))
   }
 
-  // Se já autenticado e tentar ir para login
-  if (isAuthenticated && request.nextUrl.pathname === '/login') {
-    return NextResponse.redirect(new URL('/', request.url))
+  if (accessToken) {
+    try {
+      const { payload } = await jwtVerify(accessToken, secret)
+      const isAdmin = payload.is_admin
+
+      // admin tentando acessar login
+      if (isAdmin && pathname === "/login") {
+        return NextResponse.redirect(new URL("/admin", request.url))
+      }
+
+      // usuário normal tentando acessar admin
+      if (pathname.startsWith("/admin") && !isAdmin) {
+        return NextResponse.redirect(new URL("/", request.url))
+      }
+
+    } catch {
+      return NextResponse.redirect(new URL("/login", request.url))
+    }
   }
 
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: ['/', '/login', '/dashboard', '/users', '/providers', '/requests', '/settings', '/reports'],
+  matcher: ["/admin/:path*", "/login"]
 }

@@ -24,7 +24,7 @@ export default function LoginPage() {
             {
                 onSuccess: (data) => {
                     console.log("Login bem-sucedido:", data)
-                    router.push("/")
+                    router.push("/admin/")
                 },
                 onError: () => {
                     alert("Credenciais inválidas")

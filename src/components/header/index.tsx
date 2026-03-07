@@ -4,13 +4,13 @@ import { useUser } from "@/src/hooks/useUser"
 import { usePathname } from "next/navigation"
 
 const titles: Record<string, string> = {
-    "/": "Dashboard",
-    "/users": "Usuários",
-    "/requests": "Solicitações",
-    "/providers": "Prestadores",
-    "/categories": "Categorias",
-    "/settings": "Configurações",
-    "/reports": "Relatórios"
+    "/admin/": "Dashboard",
+    "/admin/users": "Usuários",
+    "/admin/requests": "Solicitações",
+    "/admin/providers": "Prestadores",
+    "/admin/categories": "Categorias",
+    "/admin/settings": "Configurações",
+    "/admin/reports": "Relatórios"
     // Adicione mais rotas e títulos conforme necessário
 }
 
