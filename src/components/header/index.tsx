@@ -9,7 +9,8 @@ const titles: Record<string, string> = {
     "/requests": "Solicitações",
     "/providers": "Prestadores",
     "/categories": "Categorias",
-    "/settings": "Configurações"
+    "/settings": "Configurações",
+    "/reports": "Relatórios"
     // Adicione mais rotas e títulos conforme necessário
 }
 

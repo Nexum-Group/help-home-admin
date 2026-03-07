@@ -14,7 +14,7 @@ interface IListRequest {
 export default function ListRequest({ data, loading, error}:IListRequest) {
     if (loading) return <p>Carregando...</p>
     if (error) return <p>Erro ao carregar solicitações</p>
-    console.log("aqui", data)
+
     return (
         <div className="admin-card">
             <table className="admin-table">
