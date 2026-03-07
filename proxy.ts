@@ -3,18 +3,18 @@ import type { NextRequest } from 'next/server'
 
 export function proxy(request: NextRequest) {
   const accessToken = request.cookies.get('access_token')
+  const refreshToken = request.cookies.get('refresh_token')
 
   const isAuthenticated = !!accessToken
+  const hasRefresh = !!refreshToken
 
-  // Se não autenticado e tentar acessar home
-  if (!isAuthenticated && request.nextUrl.pathname === '/') {
-    console.log('Usuário não autenticado, redirecionando para login')
+  // Se não tem nenhum token
+  if (!isAuthenticated && !hasRefresh && request.nextUrl.pathname !== '/login') {
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
-  // Se autenticado e tentar acessar login
+  // Se já autenticado e tentar ir para login
   if (isAuthenticated && request.nextUrl.pathname === '/login') {
-    console.log('Usuário já autenticado, redirecionando para home')
     return NextResponse.redirect(new URL('/', request.url))
   }
 
@@ -22,5 +22,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/login', '/dashboard', '/users', '/providers', '/requests'],
+  matcher: ['/', '/login', '/dashboard', '/users', '/providers', '/requests', '/settings', '/reports'],
 }
