@@ -1,13 +1,17 @@
 'use client'
 
+import { AllUsers } from "@/src/types/user";
+import { exportToCSV } from "@/src/utils/export-to-csv";
+
 interface ISearchUser {
     searchTerm: string;
     setSearchTerm: (term: string) => void;
     roleFilter: 'client' | 'provider' | '';
     setRoleFilter: (role: 'client' | 'provider' | '') => void;
+    data: AllUsers[]
 }
 
-export default function SearchUser({ searchTerm, setSearchTerm, roleFilter, setRoleFilter }: ISearchUser) {
+export default function SearchUser({ data, searchTerm, setSearchTerm, roleFilter, setRoleFilter }: ISearchUser) {
     return (
         <div className="admin-toolbar">
             <input 
@@ -26,7 +30,13 @@ export default function SearchUser({ searchTerm, setSearchTerm, roleFilter, setR
                 <option value="client">Clientes</option>
                 <option value="provider">Prestadores</option>
             </select>
-            <button className="admin-btn admin-btn-primary">Exportar</button>
+            <button 
+                className="admin-btn admin-btn-primary"
+                onClick={() => exportToCSV(data, "usuarios")}
+                disabled={data.length===0}
+            >
+                Exportar CSV
+            </button>
         </div>
     )
 }

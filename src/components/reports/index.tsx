@@ -17,7 +17,7 @@ export default function Report() {
         <div className="admin-content">
           <ReportToolbar
             dateFilter={date}
-            setDateFilter={handleDate}  
+            setDateFilter={handleDate} 
         />
           <ReportStats reports={reports!}/>
           <CategoryByVolume categories={reports?.category_by_volume || []} isLoading={isLoading} error={error}/>

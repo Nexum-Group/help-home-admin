@@ -22,7 +22,8 @@ export default function Users() {
                 searchTerm={searchTerm} 
                 setSearchTerm={handleSearch} 
                 roleFilter={roleFilter} 
-                setRoleFilter={handleRoleFilter} 
+                setRoleFilter={handleRoleFilter}
+                data={data ?? []}
             />
             <ListUsers data={data || []} isLoading={isLoading} error={error} />
         </div>

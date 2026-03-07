@@ -19,8 +19,8 @@ export default function ReportToolbar({ dateFilter, setDateFilter}:IReportToolba
                 <option key={month.value} value={month.value}>{month.label}</option>
               ))}
             </select>
-            <button className="admin-btn admin-btn-primary">Exportar PDF</button>
-            <button className="admin-btn admin-btn-ghost">Exportar CSV</button>
+            {/* <button className="admin-btn admin-btn-primary">Exportar PDF</button>
+            <button className="admin-btn admin-btn-ghost">Exportar CSV</button> */}
         </div>
     )
 }
