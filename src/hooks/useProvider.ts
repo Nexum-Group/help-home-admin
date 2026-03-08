@@ -1,6 +1,6 @@
 // src/hooks/useDashboard.ts
-import { useQuery } from "@tanstack/react-query"
-import { getAllProviders } from "../services/user.service"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import updateProviderStatus, { getAllProviders } from "../services/user.service"
 import { ProviderWithServiceRequestsCount } from "../types/provider"
 import { ProviderStatus } from "../types/provider-status"
 
@@ -9,5 +9,12 @@ export function useGetAllProviders(search?: string, categoryId?: string, status?
   return useQuery<ProviderWithServiceRequestsCount[]>({
     queryKey: ["all-providers", search, categoryId, status],
     queryFn: () => getAllProviders({ search, categoryId, status }),
+  })
+}
+
+export function useUpdateProviderStatus() {
+  return useMutation({
+    mutationFn: ({ providerUuid, data }: { providerUuid: string; data: { approval_status: ProviderStatus } }) => 
+      updateProviderStatus(providerUuid, data),
   })
 }

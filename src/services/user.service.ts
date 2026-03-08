@@ -36,3 +36,10 @@ export function getUser(userUuid: string) {
         method: 'GET'
     })
 }
+
+export default function updateProviderStatus(providerUuid: string, data: { approval_status: ProviderStatus}) {
+    return apiFetch(`/user/approve-provider/${providerUuid}/`, {
+        method: 'PATCH',
+        body: JSON.stringify(data)
+    }) 
+}
