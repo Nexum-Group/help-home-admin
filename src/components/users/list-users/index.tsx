@@ -36,7 +36,7 @@ export default function ListUsers({ data, isLoading, error }: IListUsers) {
                             <td>{user.provider_profile ? "Prestador" : "Cliente"}</td>
                             <td>{formatDate(user.created_at)}</td>
                             <td><span className={`admin-badge ${user.is_active ? 'admin-badge-success' : 'admin-badge-warning'}`}>{user.is_active ? 'Ativo' : 'Inativo'}</span></td>
-                            <td><a href="#" className="admin-btn admin-btn-ghost">Ver</a></td>
+                            <td><a href={`/admin/users/${user.id}/`} className="admin-btn admin-btn-ghost">Ver</a></td>
                         </tr>
                     ))}
                     
