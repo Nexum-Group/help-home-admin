@@ -1,8 +1,8 @@
-import { UserDetail } from "@/src/types/user"
+import { User, UserDetail } from "@/src/types/user"
 import { formatDate } from "@/src/utils/format-date"
 
 interface IUserInfo {
-    user: UserDetail
+    user: UserDetail | User
 }
 
 export default function UserInfo({ user }:IUserInfo) {

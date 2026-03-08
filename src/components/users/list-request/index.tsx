@@ -20,7 +20,7 @@ export default function RequestsList({requests}:IRequestsList) {
                 </thead>
 
                 <tbody>
-                    {requests.map((request) => (
+                    {requests?.map((request) => (
                     <tr key={request.id}>
                         <td>{request.service_name}</td>
 
