@@ -1,4 +1,7 @@
 import { Category } from "./category";
+import { Review } from "./review";
+import { ServiceRequest } from "./service";
+import { ServiceArea } from "./service_area";
 import { User } from "./user";
 
 export type Provider = {
@@ -16,3 +19,9 @@ export type Provider = {
 export type ProviderWithServiceRequestsCount = Provider & {
     service_requests_count: number;
 }
+
+export type ProviderDetail = ProviderWithServiceRequestsCount & {
+    service_areas: ServiceArea[];
+    reviews: Review[];
+    services: ServiceRequest[];
+} 
