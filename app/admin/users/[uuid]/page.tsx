@@ -1,4 +1,3 @@
-// app/admin/users/[uuid]/page.tsx
 import UserDetail from "@/src/components/users/user-detail"
 
 interface PageProps {
