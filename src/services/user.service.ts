@@ -30,3 +30,9 @@ export function getAllProviders(params?: GetProvidersParams) {
         method: 'GET',
     })
 }
+
+export function getUser(userUuid: string) {
+    return apiFetch(`/user/detail/${userUuid}/`, {
+        method: 'GET'
+    })
+}
