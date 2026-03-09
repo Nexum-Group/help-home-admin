@@ -1,1 +1,1 @@
-export type ServiceStatus = "pending" | "accepted" | "in_progress" | "rejected" | "completed"
+export type ServiceStatus = 'pending' | 'accepted' | 'in_progress' | 'rejected' | 'completed';

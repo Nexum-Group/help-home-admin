@@ -1,33 +1,37 @@
-'use client'
+'use client';
 
-import FilterProviders from "@/src/components/providers/filter-providers"
-import ListProviders from "@/src/components/providers/list-providers"
-import { useGetAllProviders } from "@/src/hooks/useProvider"
-import { ProviderStatus } from "@/src/types/provider-status"
-import { useState } from "react"
+import FilterProviders from '@/src/components/providers/filter-providers';
+import ListProviders from '@/src/components/providers/list-providers';
+import { useGetAllProviders } from '@/src/hooks/useProvider';
+import { ProviderStatus } from '@/src/types/provider-status';
+import { useState } from 'react';
 
 export default function Providers() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [categoryFilter, setCategoryFilter] = useState<string>("")
-  const [statusFilter, setStatusFilter] = useState<ProviderStatus | string>("")
-  const { data, isLoading, error } = useGetAllProviders(searchTerm, categoryFilter, statusFilter as ProviderStatus)
+  const [searchTerm, setSearchTerm] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState<string>('');
+  const [statusFilter, setStatusFilter] = useState<ProviderStatus | string>('');
+  const { data, isLoading, error } = useGetAllProviders(
+    searchTerm,
+    categoryFilter,
+    statusFilter as ProviderStatus
+  );
 
   function handleSearch(term: string) {
-    setSearchTerm(term)
+    setSearchTerm(term);
   }
 
   function handleCategoryFilter(categoryId: string) {
-    setCategoryFilter(categoryId)
+    setCategoryFilter(categoryId);
   }
 
   function handleStatusFilter(status: ProviderStatus | string) {
-    setStatusFilter(status)
+    setStatusFilter(status);
   }
 
   return (
     <div className="admin-content">
       <FilterProviders
-        searchTerm={searchTerm} 
+        searchTerm={searchTerm}
         categoryFilter={categoryFilter}
         statusFilter={statusFilter}
         setCategoryFilter={handleCategoryFilter}
@@ -36,5 +40,5 @@ export default function Providers() {
       />
       <ListProviders data={data || []} isLoading={isLoading} error={error} />
     </div>
-  )
+  );
 }

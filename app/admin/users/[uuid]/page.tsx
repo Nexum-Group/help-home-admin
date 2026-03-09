@@ -1,13 +1,13 @@
-import UserDetail from "@/src/components/users/user-detail"
+import UserDetail from '@/src/components/users/user-detail';
 
 interface PageProps {
   params: Promise<{
-    uuid: string
-  }>
+    uuid: string;
+  }>;
 }
 
 export default async function UserDetailPage({ params }: PageProps) {
-  const { uuid } = await params
+  const { uuid } = await params;
 
-  return <UserDetail uuid={uuid} />
+  return <UserDetail uuid={uuid} />;
 }

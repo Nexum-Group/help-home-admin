@@ -1,37 +1,40 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { createConfig, getCurrentConfig, updateAutoApprovalConfig, updateConfig, updateMaintenanceConfig } from '../services/config.service'
+import { useMutation, useQuery } from '@tanstack/react-query';
+import {
+  createConfig,
+  getCurrentConfig,
+  updateAutoApprovalConfig,
+  updateConfig,
+  updateMaintenanceConfig,
+} from '../services/config.service';
 import { Config } from '../types/config';
-
-
 
 export function useCreateConfig() {
   return useMutation({
     mutationFn: createConfig,
-  })
+  });
 }
 
 export function useUpdateConfig() {
   return useMutation({
-    mutationFn: updateConfig
-  })
+    mutationFn: updateConfig,
+  });
 }
-
 
 export function useCurrentConfig() {
   return useQuery<Config>({
-    queryKey: ["current-config"],
+    queryKey: ['current-config'],
     queryFn: async () => getCurrentConfig(),
-  })
+  });
 }
 
 export function useMaintenanceConfig() {
-    return useMutation({
-        mutationFn: updateMaintenanceConfig,
-    })
+  return useMutation({
+    mutationFn: updateMaintenanceConfig,
+  });
 }
 
 export function useAutoApproveConfig() {
-    return useMutation({
-        mutationFn: updateAutoApprovalConfig,
-    })
+  return useMutation({
+    mutationFn: updateAutoApprovalConfig,
+  });
 }

@@ -1,5 +1,5 @@
-import { Provider } from "./provider";
-import { ServiceRequest } from "./service";
+import { Provider } from './provider';
+import { ServiceRequest } from './service';
 
 export type DashboardData = {
   total_providers: number;
@@ -8,4 +8,4 @@ export type DashboardData = {
   total_volume: number | null; // Assuming volume can be null if not calculated
   new_providers: Provider[];
   recent_requests: ServiceRequest[];
-}
+};

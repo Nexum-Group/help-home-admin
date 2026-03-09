@@ -1,66 +1,66 @@
-"use client"
+'use client';
 
-import { useCategory, useCreateCategory, useUpdateCategory } from "@/src/hooks/useCategory"
-import { useQueryClient } from "@tanstack/react-query"
-import { useState, useEffect } from "react"
+import { useCategory, useCreateCategory, useUpdateCategory } from '@/src/hooks/useCategory';
+import { useQueryClient } from '@tanstack/react-query';
+import { useState, useEffect } from 'react';
 
 type Props = {
   open: boolean;
   onClose: () => void;
-  mode: "update" | "new";
+  mode: 'update' | 'new';
   categoryUuid?: string;
-}
+};
 
-export default function CreateCategoryModal({ open, onClose, mode = "new", categoryUuid }: Props) {
-  const [name, setName] = useState("")
-  const [slug, setSlug] = useState("")
-  const [description, setDescription] = useState("")
-  const [isActive, setIsActive] = useState(true)
+export default function CreateCategoryModal({ open, onClose, mode = 'new', categoryUuid }: Props) {
+  const [name, setName] = useState('');
+  const [slug, setSlug] = useState('');
+  const [description, setDescription] = useState('');
+  const [isActive, setIsActive] = useState(true);
 
-  const { mutate: newCategory, isPending: isPendingNew } = useCreateCategory()
-  const { mutate: updateCategory, isPending: isPendingUpdate } = useUpdateCategory()
-  const { data, isLoading } = useCategory(categoryUuid ?? "")
+  const { mutate: newCategory, isPending: isPendingNew } = useCreateCategory();
+  const { mutate: updateCategory, isPending: isPendingUpdate } = useUpdateCategory();
+  const { data, isLoading } = useCategory(categoryUuid ?? '');
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    if (mode === "update" && data && !isLoading) {
-       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setName(data.name || "")
-      setSlug(data.slug || "")
-      setDescription(data.description || "")
-      setIsActive(data.is_active ?? true)
+    if (mode === 'update' && data && !isLoading) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setName(data.name || '');
+      setSlug(data.slug || '');
+      setDescription(data.description || '');
+      setIsActive(data.is_active ?? true);
     }
-  }, [mode, data, isLoading])
+  }, [mode, data, isLoading]);
 
   // Limpa o formulário quando o modal é fechado
   useEffect(() => {
     if (!open) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setName("")
-      setSlug("")
-      setDescription("")
-      setIsActive(true)
+      setName('');
+      setSlug('');
+      setDescription('');
+      setIsActive(true);
     }
-  }, [open])
+  }, [open]);
 
-  if (!open) return null
+  if (!open) return null;
 
   function formatToSlug(name: string) {
-    return name.replace(/\s+/g, "-").toLowerCase()
+    return name.replace(/\s+/g, '-').toLowerCase();
   }
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newName = e.target.value
-    setName(newName)
-    setSlug(formatToSlug(newName))
-  }
+    const newName = e.target.value;
+    setName(newName);
+    setSlug(formatToSlug(newName));
+  };
 
   function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    
+    e.preventDefault();
+
     if (!name || !slug || !description) {
-      alert("Preencha todos os campos")
-      return
+      alert('Preencha todos os campos');
+      return;
     }
 
     const payload = {
@@ -68,21 +68,21 @@ export default function CreateCategoryModal({ open, onClose, mode = "new", categ
       slug,
       description,
       is_active: isActive,
-    }
+    };
 
-    if (mode === "new") {
+    if (mode === 'new') {
       newCategory(payload, {
         onSuccess: () => {
-          queryClient.invalidateQueries({ 
-            queryKey: ['categories-options']
+          queryClient.invalidateQueries({
+            queryKey: ['categories-options'],
           });
-          alert("Nova categoria adicionada com sucesso!");
+          alert('Nova categoria adicionada com sucesso!');
           onClose();
         },
         onError: (error) => {
-          alert("Erro ao criar categoria");
+          alert('Erro ao criar categoria');
           console.error(error);
-        }
+        },
       });
     } else {
       // Modo update
@@ -90,26 +90,30 @@ export default function CreateCategoryModal({ open, onClose, mode = "new", categ
         { categoryUuid: categoryUuid!, data: payload },
         {
           onSuccess: () => {
-            queryClient.invalidateQueries({ 
-              queryKey: ['categories-options']
+            queryClient.invalidateQueries({
+              queryKey: ['categories-options'],
             });
-            alert("Categoria atualizada com sucesso!");
+            alert('Categoria atualizada com sucesso!');
             onClose();
           },
           onError: (error) => {
-            alert("Erro ao atualizar categoria");
+            alert('Erro ao atualizar categoria');
             console.error(error);
-          }
+          },
         }
       );
     }
   }
 
   const isPending = isPendingNew || isPendingUpdate;
-  const buttonText = isPending 
-    ? (mode === "new" ? "Criando..." : "Atualizando...") 
-    : (mode === "new" ? "Criar" : "Atualizar");
-  const modalTitle = mode === "new" ? "Nova Categoria" : "Editar Categoria";
+  const buttonText = isPending
+    ? mode === 'new'
+      ? 'Criando...'
+      : 'Atualizando...'
+    : mode === 'new'
+      ? 'Criar'
+      : 'Atualizar';
+  const modalTitle = mode === 'new' ? 'Nova Categoria' : 'Editar Categoria';
 
   return (
     <div className="admin-modal-overlay">
@@ -126,7 +130,7 @@ export default function CreateCategoryModal({ open, onClose, mode = "new", categ
               value={name}
               onChange={handleNameChange}
               required
-              disabled={isLoading && mode === "update"}
+              disabled={isLoading && mode === 'update'}
             />
           </div>
 
@@ -137,7 +141,7 @@ export default function CreateCategoryModal({ open, onClose, mode = "new", categ
               value={slug}
               onChange={(e) => setSlug(e.target.value)}
               required
-              disabled={isLoading && mode === "update"}
+              disabled={isLoading && mode === 'update'}
             />
           </div>
 
@@ -148,7 +152,7 @@ export default function CreateCategoryModal({ open, onClose, mode = "new", categ
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
-              disabled={isLoading && mode === "update"}
+              disabled={isLoading && mode === 'update'}
               rows={4}
             />
           </div>
@@ -159,7 +163,7 @@ export default function CreateCategoryModal({ open, onClose, mode = "new", categ
                 type="checkbox"
                 checked={isActive}
                 onChange={(e) => setIsActive(e.target.checked)}
-                disabled={isLoading && mode === "update"}
+                disabled={isLoading && mode === 'update'}
               />
               Ativa
             </label>
@@ -178,13 +182,13 @@ export default function CreateCategoryModal({ open, onClose, mode = "new", categ
             <button
               type="submit"
               className="admin-btn admin-btn-primary"
-              disabled={isPending || (mode === "update" && isLoading)}
+              disabled={isPending || (mode === 'update' && isLoading)}
             >
-              {isLoading && mode === "update" ? "Carregando..." : buttonText}
+              {isLoading && mode === 'update' ? 'Carregando...' : buttonText}
             </button>
           </div>
         </form>
       </div>
     </div>
-  )
+  );
 }

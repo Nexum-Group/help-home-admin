@@ -1,12 +1,7 @@
+import Sidebar from '@/src/components/sidebar';
+import Header from '@/src/components/header';
 
-import Sidebar from "@/src/components/sidebar"
-import Header from "@/src/components/header"
-
-export default function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="admin-layout">
       <Sidebar />
@@ -15,5 +10,5 @@ export default function AdminLayout({
         {children}
       </main>
     </div>
-  )
+  );
 }

@@ -1,5 +1,5 @@
-import Providers from "@/src/components/providers"
+import Providers from '@/src/components/providers';
 
 export default function ProviderPage() {
-    return <Providers/>
+  return <Providers />;
 }
