@@ -40,7 +40,7 @@ export default function ListRequest({ data, loading, error}:IListRequest) {
                             <td>{formatDate(request.scheduled_date)}</td>
                             <td><span className={`admin-badge ${getStatusBadgeClass(request.status)}`}>{formatStatus(request.status)}</span></td>
                             <td>R$ {request.service_price}</td>
-                            <td><a href="#" className="admin-btn admin-btn-ghost">Ver</a></td>
+                            <td><a href={`/admin/requests/${request.id}`} className="admin-btn admin-btn-ghost">Ver</a></td>
                         </tr>
                     ))}
                 
