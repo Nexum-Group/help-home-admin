@@ -22,8 +22,7 @@ export default function LoginPage() {
         mutate(
             { email, password },
             {
-                onSuccess: (data) => {
-                    console.log("Login bem-sucedido:", data)
+                onSuccess: () => {
                     router.push("/admin/")
                 },
                 onError: () => {

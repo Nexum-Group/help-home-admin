@@ -29,8 +29,7 @@ export default function SettingsForm({ data }: ISettingsProps) {
     mutate(
       { email_suport:email, platform_fee: Number(platformFee), cancellation_deadline_hours: Number(cancelDeadline) },
       {
-        onSuccess: (data) => {
-          console.log(data)
+        onSuccess: () => {
           router.push("/settings")
         },
         onError: () => {
