@@ -1,4 +1,3 @@
-// src/hooks/useDashboard.ts
 import { useQuery } from "@tanstack/react-query"
 import { AllUsers, User, UserDetail } from "../types/user"
 import { getCurrentUser } from "../services/auth.service"

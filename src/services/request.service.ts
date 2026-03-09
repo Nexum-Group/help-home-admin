@@ -17,3 +17,7 @@ export function getAllServicesRequest(params?: GetAllServicesRequest) {
         method: 'GET',
     })
 }
+
+export function getService(serviceUuid:string) {
+    return apiFetch(`/request/service-request/${serviceUuid}/`)
+}
