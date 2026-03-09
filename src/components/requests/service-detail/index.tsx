@@ -11,7 +11,6 @@ interface IServiceDetail {
 }
 export default function ServiceDetail({uuid}:IServiceDetail) {
     const { data: service, isLoading, error} = useServiceDetail(uuid);
-    console.log(service)
     if (isLoading) return <p>Carregando...</p>;
     if (error) return <p>Erro ao carregar provedores</p>;
     return (
