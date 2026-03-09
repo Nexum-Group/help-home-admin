@@ -7,7 +7,7 @@ export async function apiFetch(url: string, options?: RequestInit, retry = true)
     },
     credentials: 'include',
   });
-
+  console.log(`${process.env.NEXT_PUBLIC_API_URL}${url}`)
   if (response.status === 401 && retry) {
     const refreshResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/token/refresh/`, {
       method: 'POST',

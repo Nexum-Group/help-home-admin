@@ -23,7 +23,8 @@ export default function LoginPage() {
       { email, password },
       {
         onSuccess: () => {
-          router.push('/admin/');
+          router.replace('/admin');
+          router.refresh()
         },
         onError: () => {
           alert('Credenciais inválidas');
