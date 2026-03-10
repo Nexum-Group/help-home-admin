@@ -1,36 +1,41 @@
 'use client';
 
-import { useLogin } from '@/src/hooks/useLogin';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export default function LoginPage() {
-  const router = useRouter();
-  const { mutate, isPending } = useLogin();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isPending, setIsPending] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!email || !password) {
-      alert('Preencha todos os campos');
-      return;
-    }
+    try {
+      setIsPending(true);
 
-    mutate(
-      { email, password },
-      {
-        onSuccess: () => {
-          router.replace('/admin');
-          router.refresh()
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        onError: () => {
-          alert('Credenciais inválidas');
-        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Login inválido");
       }
-    );
+
+      window.location.href = "/admin";
+
+    } catch {
+      alert("Erro ao fazer login");
+    } finally {
+      setIsPending(false);
+    }
   };
 
   return (
