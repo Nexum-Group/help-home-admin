@@ -7,15 +7,15 @@ const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 export async function proxy(request: NextRequest) {
   const accessToken = request.cookies.get('access_token')?.value;
   const pathname = request.nextUrl.pathname;
-  console.log(accessToken)
+  console.log(accessToken);
   // não logado tentando acessar admin
   if (!accessToken && pathname.startsWith('/admin')) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
-  
+
   if (!accessToken) {
-    if (pathname !== "/login") {
-      return NextResponse.redirect(new URL("/login", request.url));
+    if (pathname !== '/login') {
+      return NextResponse.redirect(new URL('/login', request.url));
     }
     return NextResponse.next();
   }

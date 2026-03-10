@@ -3,7 +3,6 @@
 import { useState } from 'react';
 
 export default function LoginPage() {
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isPending, setIsPending] = useState(false);
@@ -14,10 +13,10 @@ export default function LoginPage() {
     try {
       setIsPending(true);
 
-      const res = await fetch("/api/login", {
-        method: "POST",
+      const res = await fetch('/api/login', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           email,
@@ -26,13 +25,12 @@ export default function LoginPage() {
       });
 
       if (!res.ok) {
-        throw new Error("Login inválido");
+        throw new Error('Login inválido');
       }
 
-      window.location.href = "/admin";
-
+      window.location.href = '/admin';
     } catch {
-      alert("Erro ao fazer login");
+      alert('Erro ao fazer login');
     } finally {
       setIsPending(false);
     }

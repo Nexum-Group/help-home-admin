@@ -4,7 +4,7 @@ export async function apiFetch(url: string, options?: RequestInit) {
   });
 
   if (!response.ok) {
-    throw new Error("Erro na requisição");
+    throw new Error('Erro na requisição');
   }
 
   return response.json();
