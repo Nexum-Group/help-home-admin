@@ -5,7 +5,12 @@ export async function GET(req: NextRequest, context: { params: Promise<{ path: s
 
   const access = req.cookies.get('access_token')?.value;
 
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/${path.join('/')}`;
+  const searchParams = req.nextUrl.searchParams.toString();
+  const queryString = searchParams ? `?${searchParams}` : '';
+
+  const pathString = path.join('/');
+
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/${pathString}${queryString}`;
 
   const response = await fetch(url, {
     headers: {
