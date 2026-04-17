@@ -4,6 +4,7 @@ import { useUser } from '@/src/hooks/useUser';
 import { usePathname } from 'next/navigation';
 import CreateCategoryModal from '../category/create-category-modal';
 import ImportCategoryModal from '../category/import-category-modal';
+import { HeaderSkeleton } from '@/src/components/ui/skeleton';
 import { useState } from 'react';
 
 const titles: Record<string, string> = {
@@ -14,7 +15,6 @@ const titles: Record<string, string> = {
   '/admin/categories': 'Categorias',
   '/admin/settings': 'Configurações',
   '/admin/reports': 'Relatórios',
-  // Adicione mais rotas e títulos conforme necessário
 };
 
 export default function Header() {
@@ -24,8 +24,10 @@ export default function Header() {
   const [createOpen, setCreateOpen] = useState(false);
   const [importOpen, setImportOpen] = useState(false);
   const { data, isLoading, error } = useUser();
-  if (isLoading) return <p>Carregando...</p>;
-  if (error) return <p>Erro ao carregar dashboard</p>;
+
+  if (isLoading) return <HeaderSkeleton />;
+  if (error) return <HeaderSkeleton />;
+
   return (
     <header className="admin-header">
       <h1>{title}</h1>
