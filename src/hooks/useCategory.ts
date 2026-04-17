@@ -10,9 +10,12 @@ import { CategoryItem, CategoryOptions } from '../types/categories';
 import { Category, CategoryCreateAndUpdate } from '../types/category';
 
 export function useCategories() {
-  return useQuery<CategoryOptions[] | CategoryItem[]>({
+  return useQuery<unknown>({
     queryKey: ['categories-options'],
-    queryFn: getAllCategories,
+    queryFn: async () => {
+      const response = await getAllCategories();
+      return Array.isArray(response) ? response : response.results || [];
+    },
   });
 }
 

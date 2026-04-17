@@ -5,9 +5,12 @@ import { ProviderDetail, ProviderWithServiceRequestsCount } from '../types/provi
 import { ProviderStatus } from '../types/provider-status';
 
 export function useGetAllProviders(search?: string, categoryId?: string, status?: ProviderStatus) {
-  return useQuery<ProviderWithServiceRequestsCount[]>({
+  return useQuery<unknown>({
     queryKey: ['all-providers', search, categoryId, status],
-    queryFn: () => getAllProviders({ search, categoryId, status }),
+    queryFn: async () => {
+      const response = await getAllProviders({ search, categoryId, status });
+      return Array.isArray(response) ? response : response.results || [];
+    },
   });
 }
 

@@ -10,10 +10,31 @@ export function useUser() {
   });
 }
 
-export function useGetAllUsers(search?: string, role?: 'client' | 'provider') {
-  return useQuery<AllUsers[]>({
-    queryKey: ['all-users', search, role],
-    queryFn: () => getAllUsers({ search, role }),
+interface UseGetAllUsersParams {
+  search?: string;
+  role?: 'client' | 'provider';
+  page?: number;
+}
+
+interface PaginatedResponse<T> {
+  results: T[];
+  count: number;
+  next: string | null;
+  previous: string | null;
+}
+
+export function useGetAllUsers(params?: UseGetAllUsersParams) {
+  const { search, role, page = 1 } = params || {};
+
+  return useQuery<unknown>({
+    queryKey: ['all-users', search, role, page],
+    queryFn: async () => {
+      const response = await getAllUsers({ search, role, page });
+      if (Array.isArray(response)) {
+        return { results: response, count: response.length, next: null, previous: null };
+      }
+      return response as PaginatedResponse<AllUsers>;
+    },
   });
 }
 export function useUserDetail(userUuid: string) {
