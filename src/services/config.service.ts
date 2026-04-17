@@ -9,26 +9,26 @@ export function createConfig(data: CreateAndUpdateConfig) {
 }
 
 export function updateConfig(data: CreateAndUpdateConfig) {
-  return apiFetch(`/config/update/`, {
+  return apiFetch('/config/update/', {
     method: 'PATCH',
     body: JSON.stringify(data),
   });
 }
 
 export function getCurrentConfig() {
-  return apiFetch(`/config/current/`, {
+  return apiFetch('/config/current/', {
     method: 'GET',
   });
 }
 
 export function updateMaintenanceConfig() {
-  return apiFetch(`/config/maintenance/`, {
+  return apiFetch('/config/maintenance/', {
     method: 'PATCH',
   });
 }
 
 export function updateAutoApprovalConfig() {
-  return apiFetch(`/config/auto_approval/`, {
+  return apiFetch('/config/auto_approval/', {
     method: 'PATCH',
   });
 }

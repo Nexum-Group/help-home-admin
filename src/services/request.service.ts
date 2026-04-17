@@ -12,11 +12,11 @@ export function getAllServicesRequest(params?: GetAllServicesRequest) {
   if (params?.search) query.append('search', params.search);
   if (params?.status) query.append('status', params.status);
   if (params?.date) query.append('scheduled_date', params.date);
-  return apiFetch(`/request/all-requests/?${query.toString()}`, {
+  return apiFetch(`/request/?${query.toString()}`, {
     method: 'GET',
   });
 }
 
 export function getService(serviceUuid: string) {
-  return apiFetch(`/request/service-request/${serviceUuid}/`);
+  return apiFetch(`/request/${serviceUuid}/`);
 }

@@ -4,6 +4,7 @@ import { ProviderStatus } from '../types/provider-status';
 interface GetUsersParams {
   search?: string;
   role?: 'client' | 'provider';
+  page?: number;
 }
 interface GetProvidersParams {
   search?: string;
@@ -15,7 +16,8 @@ export function getAllUsers(params?: GetUsersParams) {
   const query = new URLSearchParams();
   if (params?.search) query.append('search', params.search);
   if (params?.role) query.append('role', params.role);
-  return apiFetch(`/user/all-users/?${query.toString()}`, {
+  if (params?.page) query.append('page', params.page.toString());
+  return apiFetch(`/user/users/?${query.toString()}`, {
     method: 'GET',
   });
 }
@@ -25,19 +27,19 @@ export function getAllProviders(params?: GetProvidersParams) {
   if (params?.categoryId) query.append('category_id', params.categoryId);
   if (params?.search) query.append('search', params.search);
   if (params?.status) query.append('approval_status', params.status);
-  return apiFetch(`/user/all-providers/?${query.toString()}`, {
+  return apiFetch(`/user/providers/?${query.toString()}`, {
     method: 'GET',
   });
 }
 
 export function getUser(userUuid: string) {
-  return apiFetch(`/user/detail/${userUuid}/`, {
+  return apiFetch(`/user/users/${userUuid}/`, {
     method: 'GET',
   });
 }
 
 export function getProvider(providerUuid: string) {
-  return apiFetch(`/user/detail/provider/${providerUuid}/`, {
+  return apiFetch(`/user/providers/${providerUuid}/`, {
     method: 'GET',
   });
 }
@@ -46,8 +48,8 @@ export default function updateProviderStatus(
   providerUuid: string,
   data: { approval_status: ProviderStatus }
 ) {
-  return apiFetch(`/user/approve-provider/${providerUuid}/`, {
-    method: 'PATCH',
+  return apiFetch(`/user/providers/${providerUuid}/`, {
+    method: 'PUT',
     body: JSON.stringify(data),
   });
 }
