@@ -4,6 +4,7 @@ import FilterProviders from '@/src/components/providers/filter-providers';
 import ListProviders from '@/src/components/providers/list-providers';
 import { useGetAllProviders } from '@/src/hooks/useProvider';
 import { ProviderStatus } from '@/src/types/provider-status';
+import { ProviderWithServiceRequestsCount } from '@/src/types/provider';
 import { useState } from 'react';
 
 export default function Providers() {
@@ -15,6 +16,10 @@ export default function Providers() {
     categoryFilter,
     statusFilter as ProviderStatus
   );
+
+  const providers: ProviderWithServiceRequestsCount[] = Array.isArray(data)
+    ? data
+    : (data as { results?: ProviderWithServiceRequestsCount[] })?.results || [];
 
   function handleSearch(term: string) {
     setSearchTerm(term);
@@ -38,7 +43,7 @@ export default function Providers() {
         setSearchTerm={handleSearch}
         setStatusFilter={handleStatusFilter}
       />
-      <ListProviders data={data || []} isLoading={isLoading} error={error} />
+      <ListProviders data={providers} isLoading={isLoading} error={error} />
     </div>
   );
 }

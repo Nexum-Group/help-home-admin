@@ -7,11 +7,20 @@ interface ISelectCategory {
   setCategoryFilter: (categoryId: string) => void;
 }
 
+interface CategoryItem {
+  id: string;
+  name: string;
+}
+
 export default function SelectCategory({ categoryFilter, setCategoryFilter }: ISelectCategory) {
   const { data, isLoading, error } = useCategories();
 
   if (isLoading) return <p>Carregando categorias...</p>;
   if (error) return <p>Erro ao carregar categorias</p>;
+
+  const categories: CategoryItem[] = Array.isArray(data)
+    ? data
+    : (data as { results?: CategoryItem[] })?.results || [];
 
   return (
     <select
@@ -24,7 +33,7 @@ export default function SelectCategory({ categoryFilter, setCategoryFilter }: IS
       onChange={(e) => setCategoryFilter(e.target.value)}
     >
       <option value="">Todas categorias</option>
-      {data?.map((category) => (
+      {categories.map((category: CategoryItem) => (
         <option key={category.id} value={category.id}>
           {category.name}
         </option>
