@@ -5,6 +5,7 @@ interface GetAllServicesRequest {
   search?: string;
   status?: ServiceStatus;
   date?: string;
+  page?: number;
 }
 
 export function getAllServicesRequest(params?: GetAllServicesRequest) {
@@ -12,6 +13,7 @@ export function getAllServicesRequest(params?: GetAllServicesRequest) {
   if (params?.search) query.append('search', params.search);
   if (params?.status) query.append('status', params.status);
   if (params?.date) query.append('scheduled_date', params.date);
+  if (params?.page) query.append('page', params.page.toString());
   return apiFetch(`/request/?${query.toString()}`, {
     method: 'GET',
   });

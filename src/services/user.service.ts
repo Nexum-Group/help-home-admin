@@ -10,6 +10,7 @@ interface GetProvidersParams {
   search?: string;
   categoryId?: string;
   status?: ProviderStatus;
+  page?: number;
 }
 
 export function getAllUsers(params?: GetUsersParams) {
@@ -27,6 +28,7 @@ export function getAllProviders(params?: GetProvidersParams) {
   if (params?.categoryId) query.append('category_id', params.categoryId);
   if (params?.search) query.append('search', params.search);
   if (params?.status) query.append('approval_status', params.status);
+  if (params?.page) query.append('page', params.page.toString());
   return apiFetch(`/user/providers/?${query.toString()}`, {
     method: 'GET',
   });
