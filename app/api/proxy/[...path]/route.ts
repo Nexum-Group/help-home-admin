@@ -10,20 +10,23 @@ async function handleRequest(
   const access = req.cookies.get('access_token')?.value;
   const searchParams = req.nextUrl.searchParams.toString();
   const queryString = searchParams ? `?${searchParams}` : '';
-  const pathString = path.join('/');
+  const pathString = path.join('/') + '/';
 
   const url = `${process.env.NEXT_PUBLIC_API_URL}/${pathString}${queryString}`;
 
   const fetchOptions: RequestInit = {
+    method: method,
     headers: {
       Authorization: `Bearer ${access}`,
       'Content-Type': 'application/json',
     },
   };
 
-  if (method !== 'GET' && method !== 'HEAD') {
-    fetchOptions.method = method;
-    fetchOptions.body = await req.text();
+  if (method !== 'GET' && method !== 'HEAD' && method !== 'OPTIONS') {
+    const body = await req.text();
+    if (body) {
+      fetchOptions.body = body;
+    }
   }
 
   const response = await fetch(url, fetchOptions);

@@ -24,10 +24,8 @@ export default function SearchUser({
   const debouncedValue = useDebounce(inputValue, 300);
 
   useEffect(() => {
-    if (debouncedValue !== searchTerm) {
-      setSearchTerm(debouncedValue);
-    }
-  }, [debouncedValue, searchTerm, setSearchTerm]);
+    setSearchTerm(debouncedValue);
+  }, [debouncedValue]);
 
   return (
     <div className="admin-toolbar">

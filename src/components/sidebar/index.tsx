@@ -1,6 +1,5 @@
 'use client';
 
-import { useLogout } from '@/src/hooks/useLogout';
 import { useRouter } from 'next/navigation';
 
 export default function Sidebar() {
@@ -117,17 +116,10 @@ export default function Sidebar() {
     },
   ];
   const router = useRouter();
-  const { mutate } = useLogout();
 
-  const handleLogout = () => {
-    mutate(undefined, {
-      onSuccess: () => {
-        router.push('/login');
-      },
-      onError: () => {
-        alert('Erro ao fazer logout');
-      },
-    });
+  const handleLogout = async () => {
+    await fetch('/api/logout', { method: 'POST' });
+    router.push('/login');
   };
   return (
     <aside className="admin-sidebar">
@@ -143,13 +135,23 @@ export default function Sidebar() {
             {item.label}
           </a>
         ))}
-        <a
+        <button
           onClick={handleLogout}
           className="admin-nav-item"
           style={{
             marginTop: '1rem',
             borderTop: '1px solid rgba(255,255,255,0.08)',
             paddingTop: '1rem',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            width: '100%',
+            textAlign: 'left',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            color: 'inherit',
+            fontSize: 'inherit',
           }}
         >
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -161,7 +163,7 @@ export default function Sidebar() {
             />
           </svg>
           Sair
-        </a>
+        </button>
       </nav>
     </aside>
   );
