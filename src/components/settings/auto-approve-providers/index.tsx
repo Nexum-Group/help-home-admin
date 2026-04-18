@@ -15,30 +15,32 @@ export default function AutoApproveProviders({ isActive }: IAutoApproveProviders
       onSuccess: () => {
         setAutoOn((prev) => !prev);
       },
-      onError: (error) => {
-        alert('Erro ao alterar modo aprovação automatica');
-        console.log(error);
+      onError: () => {
+        alert('Erro ao alterar configuração');
       },
     });
   };
+
   return (
-    <div className="admin-card">
-      <h2 className="admin-card-title">Aprovação de prestadores</h2>
-      <div className="admin-form-group">
-        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <input
-            className="admin-config"
-            type="checkbox"
-            checked={autoOn}
-            disabled={isPending}
-            onChange={handleChange}
-          />
-          Exigir aprovação manual de novos prestadores
-        </label>
+    <div className="settings-toggle">
+      <div className="settings-toggle-header">
+        <span className="settings-toggle-title">Aprovação automática</span>
+        <span className={`settings-toggle-badge ${autoOn ? 'on' : 'off'}`}>
+          {autoOn ? 'Ativo' : 'Inativo'}
+        </span>
       </div>
-      <p style={{ margin: '0', fontSize: '0.875rem', color: '#64748b' }}>
-        Quando ativado, novos prestadores ficam com status &quot;Pendente&quot; até aprovação.
+      <p className="settings-toggle-desc">
+        Quando ativado, novos prestadores são aprovados automaticamente sem necessidade de revisão manual.
       </p>
+      <label className="settings-toggle-switch">
+        <input
+          type="checkbox"
+          checked={autoOn}
+          disabled={isPending}
+          onChange={handleChange}
+        />
+        <span className="settings-toggle-slider"></span>
+      </label>
     </div>
   );
 }

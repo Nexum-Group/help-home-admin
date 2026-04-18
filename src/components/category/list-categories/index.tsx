@@ -3,6 +3,7 @@
 import { CategoryItem } from '@/src/types/categories';
 import { useState } from 'react';
 import CreateCategoryModal from '../create-category-modal';
+import { UsersGridSkeleton } from '@/src/components/ui/skeleton';
 
 interface IListCategories {
   data: CategoryItem[];
@@ -26,49 +27,42 @@ export default function ListCategories({ data, loading, error }: IListCategories
     setSelectedCategory(null);
   };
 
-  if (loading) return <p>Carregando...</p>;
-  if (error) return <p>Erro ao carregar categorias: {error.message}</p>;
+  if (loading) return <UsersGridSkeleton count={8} gridClass="categories-grid" />;
+  if (error) return <p className="admin-error">Erro ao carregar categorias: {error.message}</p>;
 
   return (
     <>
-      <div className="admin-card">
-        <table className="admin-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nome</th>
-              <th>Slug</th>
-              <th>Prestadores</th>
-              <th>Status</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((category) => (
-              <tr key={category.id}>
-                <td>{category.id}</td>
-                <td>{category.name}</td>
-                <td>{category.slug}</td>
-                <td>{category.providers_count || 0}</td>
-                <td>
-                  <span
-                    className={`admin-badge admin-badge-${category.is_active ? 'success' : 'danger'}`}
-                  >
-                    {category.is_active ? 'Ativo' : 'Inativo'}
-                  </span>
-                </td>
-                <td>
-                  <button
-                    className="admin-btn admin-btn-ghost"
-                    onClick={() => handleEdit(category)}
-                  >
-                    Editar
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="categories-grid">
+        {data.map((category) => (
+          <div key={category.id} className="category-card">
+            <div className="category-card-header">
+              <div
+                className="category-icon"
+                style={{ backgroundColor: category.icon ? '#e0e7ff' : '#f1f5f9' }}
+              >
+                {category.name?.charAt(0).toUpperCase() || '?'}
+              </div>
+              <div className="category-card-info">
+                <h3 className="category-card-name">{category.name}</h3>
+                <p className="category-card-slug">{category.slug}</p>
+              </div>
+            </div>
+
+            <div className="category-card-meta">
+              <div className="category-card-meta-item">
+                <span className="category-card-label">Prestadores</span>
+                <span className="category-card-value">{category.providers_count || 0}</span>
+              </div>
+              <span className={`category-card-status ${category.is_active ? 'active' : 'inactive'}`}>
+                {category.is_active ? 'Ativo' : 'Inativo'}
+              </span>
+            </div>
+
+            <button className="category-card-btn" onClick={() => handleEdit(category)}>
+              Editar
+            </button>
+          </div>
+        ))}
       </div>
       {modalOpen && (
         <CreateCategoryModal

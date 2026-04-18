@@ -6,13 +6,13 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface ISettingsProps {
-  data: Config;
+  data?: Config;
 }
 
 export default function SettingsForm({ data }: ISettingsProps) {
-  const [platformFee, setPlatformFee] = useState(String(data?.platform_fee));
-  const [cancelDeadline, setCancelDeadline] = useState(String(data?.cancellation_deadline_hours));
-  const [email, setEmail] = useState(data?.email_suport);
+  const [platformFee, setPlatformFee] = useState(String(data?.platform_fee || 10));
+  const [cancelDeadline, setCancelDeadline] = useState(String(data?.cancellation_deadline_hours || 24));
+  const [email, setEmail] = useState(data?.email_suport || '');
 
   const router = useRouter();
   const { mutate, isPending } = useUpdateConfig();
@@ -33,47 +33,57 @@ export default function SettingsForm({ data }: ISettingsProps) {
       },
       {
         onSuccess: () => {
-          router.push('/settings');
+          router.refresh();
         },
         onError: () => {
-          alert('Error ao criar configurações');
+          alert('Erro ao salvar configurações');
         },
       }
     );
   };
 
   return (
-    <div className="admin-card">
-      <h2 className="admin-card-title">Plataforma</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="admin-form-row">
-          <div className="admin-form-group">
-            <label>Taxa da plataforma (%)</label>
-            <input
-              type="number"
-              value={platformFee}
-              onChange={(e) => setPlatformFee(e.target.value)}
-              min="0"
-              max="30"
-            />
-          </div>
-          <div className="admin-form-group">
-            <label>Prazo para cancelamento (horas)</label>
-            <input
-              type="number"
-              value={cancelDeadline}
-              onChange={(e) => setCancelDeadline(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className="admin-form-group">
-          <label>E-mail de suporte</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        </div>
-        <button type="submit" className="admin-btn admin-btn-primary" disabled={isPending}>
-          {isPending ? 'Salvando...' : 'Salvar'}
-        </button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit} className="settings-form">
+      <div className="settings-form-group">
+        <label className="settings-form-label">Taxa da plataforma (%)</label>
+        <input
+          type="number"
+          className="settings-form-input"
+          value={platformFee}
+          onChange={(e) => setPlatformFee(e.target.value)}
+          min="0"
+          max="30"
+        />
+        <span className="settings-form-hint">Porcentagem cobrada sobre cada serviço</span>
+      </div>
+
+      <div className="settings-form-group">
+        <label className="settings-form-label">Prazo para cancelamento (horas)</label>
+        <input
+          type="number"
+          className="settings-form-input"
+          value={cancelDeadline}
+          onChange={(e) => setCancelDeadline(e.target.value)}
+          min="0"
+        />
+        <span className="settings-form-hint">Horas antes do serviço para cancelamento</span>
+      </div>
+
+      <div className="settings-form-group">
+        <label className="settings-form-label">E-mail de suporte</label>
+        <input
+          type="email"
+          className="settings-form-input"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="suporte@help-home.com.br"
+        />
+        <span className="settings-form-hint">receberá notificações do sistema</span>
+      </div>
+
+      <button type="submit" className="admin-btn admin-btn-primary" disabled={isPending}>
+        {isPending ? 'Salvando...' : 'Salvar configurações'}
+      </button>
+    </form>
   );
 }
