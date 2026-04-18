@@ -2,6 +2,8 @@
 
 import { AllUsers } from '@/src/types/user';
 import { exportToCSV } from '@/src/utils/export-to-csv';
+import { useDebounce } from '@/src/hooks/useDebounce';
+import { useState, useEffect } from 'react';
 
 interface ISearchUser {
   searchTerm: string;
@@ -18,14 +20,23 @@ export default function SearchUser({
   roleFilter,
   setRoleFilter,
 }: ISearchUser) {
+  const [inputValue, setInputValue] = useState(searchTerm);
+  const debouncedValue = useDebounce(inputValue, 300);
+
+  useEffect(() => {
+    if (debouncedValue !== searchTerm) {
+      setSearchTerm(debouncedValue);
+    }
+  }, [debouncedValue, searchTerm, setSearchTerm]);
+
   return (
     <div className="admin-toolbar">
       <input
         type="search"
         className="admin-search"
         placeholder="Buscar por nome ou e-mail..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
       />
       <select
         style={{

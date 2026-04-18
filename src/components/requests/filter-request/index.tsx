@@ -1,6 +1,8 @@
 'use client';
 
 import { ServiceStatus } from '@/src/types/services-status';
+import { useDebounce } from '@/src/hooks/useDebounce';
+import { useState, useEffect } from 'react';
 
 interface IFilterRequest {
   searchTerm: string;
@@ -19,14 +21,23 @@ export default function FilterRequest({
   statusFilter,
   setStatusFilter,
 }: IFilterRequest) {
+  const [inputValue, setInputValue] = useState(searchTerm);
+  const debouncedValue = useDebounce(inputValue, 300);
+
+  useEffect(() => {
+    if (debouncedValue !== searchTerm) {
+      setSearchTerm(debouncedValue);
+    }
+  }, [debouncedValue, searchTerm, setSearchTerm]);
+
   return (
     <div className="admin-toolbar">
       <input
         type="search"
         className="admin-search"
-        placeholder="Buscar por ID,cliente, prestador..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        placeholder="Buscar por ID, cliente, prestador..."
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
       />
       <select
         style={{

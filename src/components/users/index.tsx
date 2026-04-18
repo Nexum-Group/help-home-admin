@@ -1,7 +1,6 @@
 'use client';
 
 import { useGetAllUsers } from '@/src/hooks/useUser';
-import { useDebounce } from '@/src/hooks/useDebounce';
 import ListUsers from './list-users';
 import SearchUser from './search-user';
 import { ToolbarSkeleton } from '@/src/components/ui/skeleton';
@@ -15,10 +14,8 @@ export default function Users() {
   const [roleFilter, setRoleFilter] = useState<'client' | 'provider' | ''>('');
   const [currentPage, setCurrentPage] = useState(1);
 
-  const debouncedSearch = useDebounce(searchTerm, 300);
-
   const { data, isLoading, error } = useGetAllUsers({
-    search: debouncedSearch,
+    search: searchTerm,
     role: roleFilter || undefined,
     page: currentPage,
   });
@@ -27,11 +24,6 @@ export default function Users() {
   const users = response?.results || [];
   const totalCount = response?.count || 0;
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
-
-  function handleSearch(term: string) {
-    setSearchTerm(term);
-    setCurrentPage(1);
-  }
 
   function handleRoleFilter(role: 'client' | 'provider' | '') {
     setRoleFilter(role);
@@ -44,17 +36,13 @@ export default function Users() {
 
   return (
     <div className="admin-content">
-      {isLoading ? (
-        <ToolbarSkeleton />
-      ) : (
-        <SearchUser
-          searchTerm={searchTerm}
-          setSearchTerm={handleSearch}
-          roleFilter={roleFilter}
-          setRoleFilter={handleRoleFilter}
-          data={users}
-        />
-      )}
+      <SearchUser
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        roleFilter={roleFilter}
+        setRoleFilter={handleRoleFilter}
+        data={users}
+      />
       <div className="admin-results-info">
         <span>{totalCount} usuário{totalCount !== 1 ? 's' : ''} encontrado{totalCount !== 1 ? 's' : ''}</span>
       </div>

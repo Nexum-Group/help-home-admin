@@ -3,10 +3,8 @@
 import FilterProviders from '@/src/components/providers/filter-providers';
 import ListProviders from '@/src/components/providers/list-providers';
 import { useGetAllProviders } from '@/src/hooks/useProvider';
-import { useDebounce } from '@/src/hooks/useDebounce';
 import { ProviderStatus } from '@/src/types/provider-status';
 import { ProviderWithServiceRequestsCount } from '@/src/types/provider';
-import { ToolbarSkeleton } from '@/src/components/ui/skeleton';
 import { useState } from 'react';
 
 const ITEMS_PER_PAGE = 12;
@@ -17,10 +15,8 @@ export default function Providers() {
   const [statusFilter, setStatusFilter] = useState<ProviderStatus | string>('');
   const [currentPage, setCurrentPage] = useState(1);
 
-  const debouncedSearch = useDebounce(searchTerm, 300);
-
   const { data, isLoading, error } = useGetAllProviders({
-    search: debouncedSearch,
+    search: searchTerm,
     categoryId: categoryFilter,
     status: statusFilter as ProviderStatus,
     page: currentPage,
@@ -30,11 +26,6 @@ export default function Providers() {
   const providers = response?.results || [];
   const totalCount = response?.count || 0;
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
-
-  function handleSearch(term: string) {
-    setSearchTerm(term);
-    setCurrentPage(1);
-  }
 
   function handleCategoryFilter(categoryId: string) {
     setCategoryFilter(categoryId);
@@ -52,18 +43,14 @@ export default function Providers() {
 
   return (
     <div className="admin-content">
-      {isLoading ? (
-        <ToolbarSkeleton />
-      ) : (
-        <FilterProviders
-          searchTerm={searchTerm}
-          categoryFilter={categoryFilter}
-          statusFilter={statusFilter}
-          setCategoryFilter={handleCategoryFilter}
-          setSearchTerm={handleSearch}
-          setStatusFilter={handleStatusFilter}
-        />
-      )}
+      <FilterProviders
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        categoryFilter={categoryFilter}
+        setCategoryFilter={handleCategoryFilter}
+        statusFilter={statusFilter}
+        setStatusFilter={handleStatusFilter}
+      />
       <div className="admin-results-info">
         <span>
           {totalCount} prestador{totalCount !== 1 ? 'es' : ''} encontrado

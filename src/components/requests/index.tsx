@@ -3,10 +3,8 @@
 import FilterRequest from '@/src/components/requests/filter-request';
 import ListRequest from '@/src/components/requests/list-requests';
 import { useGetAllServices } from '@/src/hooks/useRequest';
-import { useDebounce } from '@/src/hooks/useDebounce';
 import { ServiceStatus } from '@/src/types/services-status';
 import { ServiceRequest } from '@/src/types/service';
-import { ToolbarSkeleton } from '@/src/components/ui/skeleton';
 import { useState } from 'react';
 
 const ITEMS_PER_PAGE = 12;
@@ -17,10 +15,8 @@ export default function Requests() {
   const [date, setDate] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
-  const debouncedSearch = useDebounce(searchTerm, 300);
-
   const { data, isLoading, error } = useGetAllServices({
-    search: debouncedSearch,
+    search: searchTerm,
     status: serviceStatus,
     date,
     page: currentPage,
@@ -30,11 +26,6 @@ export default function Requests() {
   const requests = response?.results || [];
   const totalCount = response?.count || 0;
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
-
-  function handleSearch(term: string) {
-    setSearchTerm(term);
-    setCurrentPage(1);
-  }
 
   function handleServiceStatus(status: ServiceStatus) {
     setServiceStatus(status);
@@ -52,18 +43,14 @@ export default function Requests() {
 
   return (
     <div className="admin-content">
-      {isLoading ? (
-        <ToolbarSkeleton />
-      ) : (
-        <FilterRequest
-          searchTerm={searchTerm}
-          setSearchTerm={handleSearch}
-          statusFilter={serviceStatus}
-          setStatusFilter={handleServiceStatus}
-          dateFilter={date}
-          setDateFilter={handleDate}
-        />
-      )}
+      <FilterRequest
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        statusFilter={serviceStatus}
+        setStatusFilter={handleServiceStatus}
+        dateFilter={date}
+        setDateFilter={handleDate}
+      />
       <div className="admin-results-info">
         <span>
           {totalCount} solicitação{totalCount !== 1 ? 'ões' : ''} encontrada
