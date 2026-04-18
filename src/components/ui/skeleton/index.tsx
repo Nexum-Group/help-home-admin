@@ -1,9 +1,12 @@
+import React from 'react';
+
 interface SkeletonProps {
   className?: string;
+  style?: React.CSSProperties;
 }
 
-export function Skeleton({ className }: SkeletonProps) {
-  return <div className={`skeleton ${className || ''}`} />;
+export function Skeleton({ className, style }: SkeletonProps) {
+  return <div className={`skeleton ${className || ''}`} style={style} />;
 }
 
 export function UserCardSkeleton() {
@@ -26,11 +29,41 @@ export function UserCardSkeleton() {
   );
 }
 
-export function UsersGridSkeleton({ count = 8 }: { count?: number }) {
+export function UsersGridSkeleton({ count = 8, gridClass = 'users-grid' }: { count?: number; gridClass?: string }) {
   return (
-    <div className="users-grid">
+    <div className={gridClass}>
       {Array.from({ length: count }).map((_, i) => (
         <UserCardSkeleton key={i} />
+      ))}
+    </div>
+  );
+}
+
+export function ProviderCardSkeleton() {
+  return (
+    <div className="user-card-skeleton">
+      <div className="user-card-skeleton-header">
+        <Skeleton className="skeleton-avatar" style={{ background: 'linear-gradient(135deg, #059669 0%, #047857 100%)' }} />
+        <div className="user-card-skeleton-info">
+          <Skeleton className="skeleton-text skeleton-text-lg" />
+          <Skeleton className="skeleton-text" />
+        </div>
+      </div>
+      <div className="user-card-skeleton-meta">
+        <Skeleton className="skeleton-badge" />
+        <Skeleton className="skeleton-badge" />
+        <Skeleton className="skeleton-text skeleton-text-sm" />
+      </div>
+      <Skeleton className="skeleton-button" />
+    </div>
+  );
+}
+
+export function ProvidersGridSkeleton({ count = 8 }: { count?: number }) {
+  return (
+    <div className="providers-grid">
+      {Array.from({ length: count }).map((_, i) => (
+        <ProviderCardSkeleton key={i} />
       ))}
     </div>
   );
