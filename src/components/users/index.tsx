@@ -1,6 +1,7 @@
 'use client';
 
 import { useGetAllUsers } from '@/src/hooks/useUser';
+import { useDebounce } from '@/src/hooks/useDebounce';
 import ListUsers from './list-users';
 import SearchUser from './search-user';
 import { ToolbarSkeleton } from '@/src/components/ui/skeleton';
@@ -14,8 +15,10 @@ export default function Users() {
   const [roleFilter, setRoleFilter] = useState<'client' | 'provider' | ''>('');
   const [currentPage, setCurrentPage] = useState(1);
 
+  const debouncedSearch = useDebounce(searchTerm, 300);
+
   const { data, isLoading, error } = useGetAllUsers({
-    search: searchTerm,
+    search: debouncedSearch,
     role: roleFilter || undefined,
     page: currentPage,
   });

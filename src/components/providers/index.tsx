@@ -3,6 +3,7 @@
 import FilterProviders from '@/src/components/providers/filter-providers';
 import ListProviders from '@/src/components/providers/list-providers';
 import { useGetAllProviders } from '@/src/hooks/useProvider';
+import { useDebounce } from '@/src/hooks/useDebounce';
 import { ProviderStatus } from '@/src/types/provider-status';
 import { ProviderWithServiceRequestsCount } from '@/src/types/provider';
 import { ToolbarSkeleton } from '@/src/components/ui/skeleton';
@@ -16,8 +17,10 @@ export default function Providers() {
   const [statusFilter, setStatusFilter] = useState<ProviderStatus | string>('');
   const [currentPage, setCurrentPage] = useState(1);
 
+  const debouncedSearch = useDebounce(searchTerm, 300);
+
   const { data, isLoading, error } = useGetAllProviders({
-    search: searchTerm,
+    search: debouncedSearch,
     categoryId: categoryFilter,
     status: statusFilter as ProviderStatus,
     page: currentPage,

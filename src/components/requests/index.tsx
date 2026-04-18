@@ -3,6 +3,7 @@
 import FilterRequest from '@/src/components/requests/filter-request';
 import ListRequest from '@/src/components/requests/list-requests';
 import { useGetAllServices } from '@/src/hooks/useRequest';
+import { useDebounce } from '@/src/hooks/useDebounce';
 import { ServiceStatus } from '@/src/types/services-status';
 import { ServiceRequest } from '@/src/types/service';
 import { ToolbarSkeleton } from '@/src/components/ui/skeleton';
@@ -16,8 +17,10 @@ export default function Requests() {
   const [date, setDate] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
+  const debouncedSearch = useDebounce(searchTerm, 300);
+
   const { data, isLoading, error } = useGetAllServices({
-    search: searchTerm,
+    search: debouncedSearch,
     status: serviceStatus,
     date,
     page: currentPage,
