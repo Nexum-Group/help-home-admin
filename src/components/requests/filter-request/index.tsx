@@ -25,10 +25,10 @@ export default function FilterRequest({
   const debouncedValue = useDebounce(inputValue, 300);
 
   useEffect(() => {
-    if (debouncedValue !== searchTerm) {
+    if (debouncedValue) {
       setSearchTerm(debouncedValue);
     }
-  }, [debouncedValue, searchTerm, setSearchTerm]);
+  }, [debouncedValue]);
 
   return (
     <div className="admin-toolbar">
