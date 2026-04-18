@@ -1,10 +1,12 @@
 import { Address } from '@/src/types/address';
 
 interface IAddressList {
-  addresses: Address[];
+  addresses?: Address[];
 }
 
-export default function AddressList({ addresses }: IAddressList) {
+export default function AddressList({ addresses = [] }: IAddressList) {
+  if (addresses.length === 0) return null;
+
   return (
     <div className="admin-card">
       <h2 className="admin-card-title">Endereços</h2>
@@ -25,9 +27,9 @@ export default function AddressList({ addresses }: IAddressList) {
             <tr key={i}>
               <td>{address.street}</td>
               <td>{address.number}</td>
-              <td>{address.neighborhood.name}</td>
-              <td>{address.neighborhood.city.name}</td>
-              <td>{address.neighborhood.city.state}</td>
+              <td>{address.neighborhood?.name}</td>
+              <td>{address.neighborhood?.city?.name}</td>
+              <td>{address.neighborhood?.city?.state}</td>
             </tr>
           ))}
         </tbody>

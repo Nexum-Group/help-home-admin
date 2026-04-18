@@ -2,10 +2,12 @@ import { User, UserDetail } from '@/src/types/user';
 import { formatDate } from '@/src/utils/format-date';
 
 interface IUserInfo {
-  user: UserDetail | User;
+  user?: UserDetail | User;
 }
 
 export default function UserInfo({ user }: IUserInfo) {
+  if (!user) return null;
+
   return (
     <div className="admin-card">
       <h2 className="admin-card-title">Informações do Usuário</h2>

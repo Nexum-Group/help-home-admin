@@ -2,10 +2,12 @@ import { Provider } from '@/src/types/provider';
 import { formatProviderStatus } from '@/src/utils/formart-status-providers';
 
 interface IProfileProvider {
-  profile: Provider;
+  profile?: Provider;
 }
 
 export default function ProviderProfile({ profile }: IProfileProvider) {
+  if (!profile) return null;
+
   return (
     <div className="admin-card">
       <h2 className="admin-card-title">Perfil de Prestador</h2>
@@ -43,20 +45,9 @@ export default function ProviderProfile({ profile }: IProfileProvider) {
       <div>
         <strong>Categorias</strong>
         <ul>
-          {profile.categories.map((cat, i) => (
+          {profile.categories?.map((cat, i) => (
             <li key={i}>{cat.name}</li>
           ))}
-        </ul>
-      </div>
-
-      <br />
-
-      <div>
-        <strong>Áreas de atendimento</strong>
-        <ul>
-          <li>
-            <i>Implementar</i>
-          </li>
         </ul>
       </div>
 
@@ -74,13 +65,6 @@ export default function ProviderProfile({ profile }: IProfileProvider) {
         </thead>
 
         <tbody>
-          {/* {user.provider_profile.reviews_received.map((review, i) => (
-                <tr key={i}>
-                  <td>{review.client}</td>
-                  <td>{review.rating}</td>
-                  <td>{review.comment}</td>
-                </tr>
-              ))} */}
         </tbody>
       </table>
     </div>

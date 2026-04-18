@@ -1,10 +1,12 @@
 import { Review } from '@/src/types/review';
 
 interface IReviewsList {
-  reviews: Review[];
+  reviews?: Review[];
 }
 
-export default function ReviewsList({ reviews }: IReviewsList) {
+export default function ReviewsList({ reviews = [] }: IReviewsList) {
+  if (reviews.length === 0) return null;
+
   return (
     <div className="admin-card">
       <h2 className="admin-card-title">Avaliações feitas</h2>
@@ -22,7 +24,7 @@ export default function ReviewsList({ reviews }: IReviewsList) {
         <tbody>
           {reviews.map((review) => (
             <tr key={review.id}>
-              <td>{review.provider.user.name}</td>
+              <td>{review.provider?.user?.name}</td>
               <td>{review.rating}</td>
               <td>{review.comment}</td>
               <td>{review.created_at}</td>

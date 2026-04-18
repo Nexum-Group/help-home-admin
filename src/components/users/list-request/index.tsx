@@ -1,10 +1,12 @@
 import { ServiceRequest } from '@/src/types/service';
 
 interface IRequestsList {
-  requests: ServiceRequest[];
+  requests?: ServiceRequest[];
 }
 
-export default function RequestsList({ requests }: IRequestsList) {
+export default function RequestsList({ requests = [] }: IRequestsList) {
+  if (requests.length === 0) return null;
+
   return (
     <div className="admin-card">
       <h2 className="admin-card-title">Solicitações de Serviço</h2>
