@@ -1938,3 +1938,70 @@ body {
   height: 36px;
   border-radius: 50%;
 }
+
+/* Error Display */
+.error-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.error-icon {
+  color: var(--admin-error);
+  margin-bottom: 16px;
+}
+
+.error-icon svg {
+  width: 48px;
+  height: 48px;
+}
+
+.error-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--admin-text);
+  margin: 0 0 8px;
+}
+
+.error-message {
+  font-size: 14px;
+  color: var(--admin-text-secondary);
+  margin: 0 0 24px;
+  max-width: 320px;
+}
+
+/* Empty Display */
+.empty-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.empty-icon {
+  color: var(--admin-text-muted);
+  margin-bottom: 16px;
+}
+
+.empty-icon svg {
+  width: 48px;
+  height: 48px;
+}
+
+.empty-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--admin-text);
+  margin: 0 0 8px;
+}
+
+.empty-message {
+  font-size: 14px;
+  color: var(--admin-text-secondary);
+  margin: 0;
+}
