@@ -1,7 +1,7 @@
 import { apiFetch } from '../lib/api';
 
 export function dashboard() {
-  return apiFetch('/user/dashboard/', {
+  return apiFetch('/users/me/dashboard/', {
     method: 'GET',
   });
 }

@@ -7,7 +7,7 @@ interface IGetReportParams {
 export function getReport(params?: IGetReportParams) {
   const query = new URLSearchParams();
   if (params?.date) query.append('date', params.date);
-  return apiFetch(`/user/reports/?${query.toString()}`, {
+  return apiFetch(`/auth/reports/?${query.toString()}`, {
     method: 'GET',
   });
 }

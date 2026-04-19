@@ -18,7 +18,7 @@ export function getAllUsers(params?: GetUsersParams) {
   if (params?.search) query.append('search', params.search);
   if (params?.role) query.append('role', params.role);
   if (params?.page) query.append('page', params.page.toString());
-  return apiFetch(`/user/users/?${query.toString()}`, {
+  return apiFetch(`/users/all/?${query.toString()}`, {
     method: 'GET',
   });
 }
@@ -29,19 +29,19 @@ export function getAllProviders(params?: GetProvidersParams) {
   if (params?.search) query.append('search', params.search);
   if (params?.status) query.append('approval_status', params.status);
   if (params?.page) query.append('page', params.page.toString());
-  return apiFetch(`/user/providers/?${query.toString()}`, {
+  return apiFetch(`/providers/?${query.toString()}`, {
     method: 'GET',
   });
 }
 
 export function getUser(userUuid: string) {
-  return apiFetch(`/user/users/${userUuid}/`, {
+  return apiFetch(`/users/all/${userUuid}/`, {
     method: 'GET',
   });
 }
 
 export function getProvider(providerUuid: string) {
-  return apiFetch(`/user/providers/${providerUuid}/`, {
+  return apiFetch(`/providers/${providerUuid}/`, {
     method: 'GET',
   });
 }
@@ -50,7 +50,7 @@ export default function updateProviderStatus(
   providerUuid: string,
   data: { approval_status: ProviderStatus }
 ) {
-  return apiFetch(`/user/providers/${providerUuid}/`, {
+  return apiFetch(`/providers/${providerUuid}/`, {
     method: 'PUT',
     body: JSON.stringify(data),
   });
